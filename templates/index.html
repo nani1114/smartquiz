@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartQuiz - Intelligent Learning Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-roles {
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-role {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 10px;
+            font-size: 0.875rem;
+            color: #374151;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1.5px solid #e5e7eb;
+        }
+
+        .header-role:hover {
+            transform: translateY(-2px);
+            border-color: #667eea;
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.15);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 100px);
+            padding: 80px 40px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-size: 1.25rem;
+            color: #6b7280;
+            margin-bottom: 40px;
+            max-width: 600px;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 16px 32px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .cta-btn-secondary:hover {
+            background: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .role-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 42px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 40px auto 0;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .role-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 48px 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            animation: fadeInUp 0.8s ease-out;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .role-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .role-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .role-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+            border-color: #667eea;
+        }
+
+        .role-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border-radius: 16px;
+            font-size: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover .role-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .role-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+
+        .role-description {
+            font-size: 1rem;
+            color: #6b7280;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .role-features {
+            text-align: left;
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 32px;
+            padding: 0 12px;
+        }
+
+        .role-features li {
+            margin-bottom: 10px;
+            list-style: none;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .role-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .signup-card .role-icon {
+            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+        }
+
+        .signup-card .login-button {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .signup-card .login-button:hover {
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+        }
+
+        .features-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 60px 40px;
+            margin-top: 60px;
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+            color: #1f2937;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .header-roles {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 40px 20px;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .description {
+                font-size: 1.1rem;
+            }
+
+            .role-cards {
+                grid-template-columns: 2fr;
+                gap: 24px;
+            }
+
+            .role-card {
+                padding: 40px 34px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .features-section {
+                padding: 40px 20px;
+                margin-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-roles {
+                display: none;
+            }
+
+            .title {
+                font-size: 1.875rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .role-card {
+                padding: 32px 30px;
+            }
+
+            .main-content {
+                padding: 30px 16px;
+            }
+
+            .hero-section {
+                margin-bottom: 40px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">SmartQuiz</div>
+        <div class="header-roles">
+            <a href="{{ url_for('lecturer_login_html') }}" class="header-role">
+                <span>👨‍🏫</span>
+                <span>Lecturer</span>
+            </a>
+            <a href="{{ url_for('student_login_html') }}" class="header-role">
+                <span>👨‍🎓</span>
+                <span>Student</span>
+            </a>
+            <a href="{{ url_for('admin_login_html') }}" class="header-role">
+                <span>🛡️</span>
+                <span>Admin</span>
+            </a>
+            <a href="{{ url_for('signup_html') }}" class="header-role">
+                <span>✨</span>
+                <span>Sign Up</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="hero-section">
+            <h1 class="title">SmartQuiz</h1>
+            <p class="description">
+                An Intelligent Way of Learning. Interactive quizzes, instant feedback, and comprehensive analytics for students, educators, and administrators.
+            </p>
+            <div class="cta-buttons">
+                {% if session.get('user_id') and session.get('role') == 'student' %}
+                <a href="{{ url_for('student_dashboard') }}" class="cta-btn cta-btn-primary">
+                {% else %}
+                <a href="{{ url_for('student_login_html') }}" class="cta-btn cta-btn-primary">
+                {% endif %}
+                    <span>🚀</span>
+                    Get Started as Student
+                </a>
+                <a href="#features" class="cta-btn cta-btn-secondary">
+                    <span>📚</span>
+                    Learn More
+                </a>
+            </div>
+        </div>
+
+        <div class="role-cards">
+            <div class="role-card">
+                <div class="role-icon">👨‍🎓</div>
+                <div class="role-title">Student</div>
+                <div class="role-description">Take interactive quizzes and track your progress</div>
+                <ul class="role-features">
+                    <li>Access quizzes anytime, anywhere</li>
+                    <li>Instant feedback and scoring</li>
+                    <li>Track your learning progress</li>
+                    <li>Review detailed results</li>
+                </ul>
+                {% if session.get('user_id') and session.get('role') == 'student' %}
+                <a href="{{ url_for('student_dashboard') }}" class="login-button">My Dashboard</a>
+                {% else %}
+                <a href="{{ url_for('signup_html') }}" class="login-button">Student Register</a>
+                {% endif %}
+            </div>  
+
+            <div class="role-card">
+                <div class="role-icon">👨‍🏫</div>
+                <div class="role-title">Lecturer</div>
+                <div class="role-description">Create and manage interactive quizzes</div>
+                <ul class="role-features">
+                    <li>Create custom quizzes</li>
+                    <li>Manage student submissions</li>
+                    <li>View comprehensive analytics</li>
+                    <li>Track class performance</li>
+                </ul>
+                {% if session.get('user_id') and session.get('role') == 'lecturer' %}
+                <a href="{{ url_for('lecturer_dashboard') }}" class="login-button">My Dashboard</a>
+                {% else %}
+                <a href="{{ url_for('signup_html') }}" class="login-button">Lecturer Register</a>
+                {% endif %}
+            </div>
+            <div class="role-card signup-card">
+                <div class="role-icon">✨</div>
+                <div class="role-title">New Here?</div>
+                <div class="role-description">Create your account today</div>
+                <ul class="role-features">
+                    <li>Quick registration process</li>
+                    <li>Instant account access</li>
+                    <li>No credit card required</li>
+                    <br>
+                    <br>
+                    <br>
+                </ul>
+                <a href="{{ url_for('signup_html') }}" class="login-button">Create Account</a>
+            </div>
+        </div>
+
+        <div class="features-section" id="features">
+            <h2 class="features-title">Why Choose SmartQuiz?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-name">Targeted Learning</div>
+                    <div class="feature-desc">Personalized quizzes designed to focus on key concepts</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-name">Detailed Analytics</div>
+                    <div class="feature-desc">Comprehensive insights into student performance</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-name">Fast & Responsive</div>
+                    <div class="feature-desc">Lightning-quick performance across all devices</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-name">Secure Platform</div>
+                    <div class="feature-desc">Enterprise-grade security for your data</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-name">Accessible Anywhere</div>
+                    <div class="feature-desc">Works on desktop, tablet, and mobile devices</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎓</div>
+                    <div class="feature-name">Educational Focus</div>
+                    <div class="feature-desc">Built specifically for educational institutions</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - SmartQuiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .signup-wrapper {
+            width: 100%;
+            max-width: 480px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 12px, 12px;
+            border-radius: 16px;
+           
+        }
+        .container1 {
+            background-color: #ffffff;
+            padding: 12px, 12px;
+            border-radius: 16px;
+            animation: fadeOut 2s forwards;
+        }
+        @keyframes fadeOut {
+            0%{opacity: 1;}
+            100%{opacity: 0; display: none;}
+        }
+
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            margin-bottom: 7px;
+        }
+
+        .logo-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 6px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .form-subtitle {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .error-message {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            border-left: 4px solid #dc2626;
+        }
+
+        .success-message {
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            border-left: 4px solid #22c55e;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background-color: #f9fafb;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            color: #374151;
+        }
+
+        .form-group select option {
+            color: #1f2937;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .footer-links {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        .footer-links p {
+            margin-bottom: 0;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .terms-text {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="signup-wrapper">
+        <div class="container">
+            <div class="logo-section">
+                <div class="logo-icon">✨</div>
+                <div class="logo-text">SmartQuiz</div>
+                <div class="logo-subtitle">Create Your Account</div>
+            </div>
+            <form action="{{ url_for('signup') }}" method="post" onsubmit="return validateForm()">
+                <div class="container1">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    {% block content %}{% endblock %}
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Choose a username" 
+                           pattern="[a-zA-Z0-9_-]{3,20}" 
+                           title="Username must be 3-20 characters long and can only contain letters, numbers and underscore" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" name="email" id="email" placeholder="your@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="At least 6 characters" 
+                           pattern=".{6,}" title="Password must be at least 6 characters long" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="At least 6 characters" 
+                           pattern=".{6,}" title="Password must be at least 6 characters long" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">I am a</label>
+                    <select name="role" id="role" required>
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="lecturer">Lecturer</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account</button>
+
+                <div class="terms-text">
+                    By signing up, you agree to our Terms of Service and Privacy Policy
+                </div>
+            </form>
+
+            <div class="footer-links">
+                <p>Already have an account? <a href="{{ url_for('student_login_html') }}">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function validateForm() {
+        var username = document.getElementById('username').value.trim();
+        var password = document.getElementById('password').value;
+        var email = document.getElementById('email').value.trim();
+        var role = document.getElementById('role').value;
+
+        // Username validation
+        if (username.length < 3 || username.length > 20) {
+            alert('Username must be between 3 and 20 characters');
+            return false;
+        }
+        if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+            alert('Username can only contain letters, numbers and underscore');
+            return false;
+        }
+
+        // Password validation
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters long');
+            return false;
+        }
+
+        // Email validation (if provided)
+        if (email && !/\S+@\S+\.\S+/.test(email)) {
+            alert('Please enter a valid email address');
+            return false;
+        }
+
+        // Role validation
+        if (!role || (role !== 'student' && role !== 'lecturer')) {
+            alert('Please select a valid role (Student or Lecturer)');
+            return false;
+        }
+
+        return true;
+    }
+    </script>
+</body>
+</html>

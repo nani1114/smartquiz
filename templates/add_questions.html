@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Add Questions - SmartQuiz{% endblock %}
+
+{% block extra_style %}
+<style>
+    .form-container {
+        max-width: 700px;
+        margin: 2rem auto;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.3rem;
+        color: #333;
+        font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    .form-group textarea {
+        min-height: 80px;
+    }
+    
+    .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .questions-list {
+        margin-top: 2rem;
+    }
+    
+    .question-item {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border-left: 4px solid #667eea;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Add Questions to: {{ quiz['title'] }}</h1>
+
+<div class="form-container">
+    <div class="card">
+        <h3>Add New Question</h3>
+        <form method="POST">
+            <div class="form-group">
+                <label for="question">Question</label>
+                <textarea id="question" name="question" required placeholder="Enter your question"></textarea>
+            </div>
+            
+            <div class="options-grid">
+                <div class="form-group">
+                    <label for="option_a">Option A</label>
+                    <input type="text" id="option_a" name="option_a" required>
+                </div>
+                <div class="form-group">
+                    <label for="option_b">Option B</label>
+                    <input type="text" id="option_b" name="option_b" required>
+                </div>
+                <div class="form-group">
+                    <label for="option_c">Option C</label>
+                    <input type="text" id="option_c" name="option_c" required>
+                </div>
+                <div class="form-group">
+                    <label for="option_d">Option D</label>
+                    <input type="text" id="option_d" name="option_d" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="correct_answer">Correct Answer</label>
+                <select id="correct_answer" name="correct_answer" required>
+                    <option value="">Select correct answer</option>
+                    <option value="A">Option A</option>
+                    <option value="B">Option B</option>
+                    <option value="C">Option C</option>
+                    <option value="D">Option D</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">Add Question</button>
+                <a href="{{ url_for('lecturer_dashboard') }}" class="btn">Done</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if questions %}
+<div class="form-container questions-list">
+    <h3>Questions Added ({{ questions|length }})</h3>
+    {% for q in questions %}
+    <div class="question-item">
+        <strong>Q{{ loop.index }}: {{ q['question'] }}</strong>
+        <p style="margin: 0.5rem 0;">
+            A) {{ q['option_a'] }}<br>
+            B) {{ q['option_b'] }}<br>
+            C) {{ q['option_c'] }}<br>
+            D) {{ q['option_d'] }}
+        </p>
+        <p style="color: #28a745; margin: 0.5rem 0;"><strong>Correct: {{ q['correct_answer'] }}</strong></p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

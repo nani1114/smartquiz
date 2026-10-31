@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - SmartQuiz{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:480px;margin:3rem auto;">
+  <h2 style="margin-bottom:1rem;">Login</h2>
+  <form method="post" action="{{ url_for('login') }}">
+    <div style="margin-bottom:0.75rem;">
+      <label>Username</label>
+      <input type="text" name="username" required style="width:100%;padding:0.5rem;margin-top:0.25rem;" />
+    </div>
+    <div style="margin-bottom:0.75rem;">
+      <label>Password</label>
+      <input type="password" name="password" required style="width:100%;padding:0.5rem;margin-top:0.25rem;" />
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;margin-top:1rem;">
+      <button class="btn" type="submit">Log In</button>
+      <a href="{{ url_for('signup_html_lower') }}" class="btn btn-success">Sign Up</a>
+    </div>
+  </form>
+  <p style="margin-top:1rem;color:#666;">Or use role-specific pages: <a href="{{ url_for('student_login_html') }}">Student</a> • <a href="{{ url_for('lecturer_login_html') }}">Lecturer</a> • <a href="{{ url_for('admin_login_html') }}">Admin</a></p>
+</div>
+{% endblock %}

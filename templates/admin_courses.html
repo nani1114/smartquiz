@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Courses</h2>
+<form method="post">
+  <label>Name</label><br>
+  <input name="name" required><br>
+  <label>Description</label><br>
+  <textarea name="description"></textarea><br>
+  <button type="submit">Add Course</button>
+</form>
+<hr>
+<ul>
+  {% for c in courses %}
+  <li style="margin-bottom:8px;">
+    <strong>{{ c['name'] }}</strong> — {{ c['description'] }}
+    <form action="{{ url_for('admin_delete_course', course_id=c['id']) }}" method="post" style="display:inline-block; margin-left:12px;">
+      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this course? This will remove it permanently.');">Delete</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

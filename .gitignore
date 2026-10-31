@@ -1,0 +1,35 @@
+
+# Environment variables
+.env
+.env.*
+
+# Python virtual environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE files
+.idea/
+.vscode/
+
+# Python build files
+build/
+dist/
+*.egg-info/
+
+# Local databases and backups
+*.db
+*.sqlite
+*.sqlite3
+*.sql.gz
+
+# Logs
+*.log
+
+# Test cache
+.pytest_cache/
+.coverage

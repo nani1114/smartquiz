@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Review Queue</h2>
+{% if reviews %}
+<table>
+  <tr><th>Title</th><th>Submitted By</th><th>Status</th><th>Details</th><th>Actions</th></tr>
+  {% for r in reviews %}
+  <tr>
+    <td>{{ r['title'] }}</td>
+    <td>{{ r['username'] }}</td>
+    <td>{{ r['status'] }}</td>
+    <td>{{ r['details'] }}</td>
+    <td>
+      <form action="{{ url_for('admin_review_approve', review_id=r['id']) }}" method="post" style="display:inline-block">
+        <button type="submit">Approve</button>
+      </form>
+      <form action="{{ url_for('admin_review_reject', review_id=r['id']) }}" method="post" style="display:inline-block">
+        <button type="submit">Reject</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No review submissions.</p>
+{% endif %}
+{% endblock %}

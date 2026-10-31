@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Analytics - SmartQuiz{% endblock %}
+{% block content %}
+<h1>Analytics Dashboard</h1>
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>{{ stats.total_students }}</h3>
+        <p>Total Students</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.total_lecturers }}</h3>
+        <p>Total Lecturers</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.total_quizzes }}</h3>
+        <p>Total Quizzes</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ stats.avg_score_pct }}%</h3>
+        <p>Average Score</p>
+    </div>
+</div>
+
+<div class="recent-activity">
+    <h2 class="section-title">Recent Activity</h2>
+    <p>Detailed charts and insights are available here (coming soon).</p>
+</div>
+
+{% endblock %}

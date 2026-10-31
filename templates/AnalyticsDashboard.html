@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Analytics Dashboard - SmartQuiz</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        .stat-card {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <h2 class="mb-4">SmartQuiz Analytics Dashboard</h2>
+
+        <!-- Overall Statistics -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card bg-primary text-white">
+                    <h5>Total Students</h5>
+                    <h3>{{ stats.total_students }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card bg-success text-white">
+                    <h5>Total Lecturers</h5>
+                    <h3>{{ stats.total_lecturers }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card bg-info text-white">
+                    <h5>Total Quizzes</h5>
+                    <h3>{{ stats.total_quizzes }}</h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card bg-warning text-white">
+                    <h5>Average Score</h5>
+                    <h3>{{ stats.avg_score_pct|round(2) }}%</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row">
+            <!-- Monthly Activity Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Monthly Activity</h5>
+                        <div class="chart-container">
+                            <canvas id="monthlyActivityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Performance Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Top Quiz Performance</h5>
+                        <div class="chart-container">
+                            <canvas id="quizPerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Activity Table -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recent User Activity</h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Active Students</th>
+                                        <th>Quiz Attempts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for activity in user_activity %}
+                                        <tr>
+                                            <td>{{ activity.date }}</td>
+                                            <td>{{ activity.active_students }}</td>
+                                            <td>{{ activity.quiz_attempts }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Monthly Activity Chart
+        const monthlyCtx = document.getElementById('monthlyActivityChart').getContext('2d');
+        const monthlyLabels = {{ monthly_labels | tojson | safe }};
+        const monthlyUniqueStudents = {{ monthly_unique_students | tojson | safe }};
+        const monthlyTotalAttempts = {{ monthly_total_attempts | tojson | safe }};
+        new Chart(monthlyCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyLabels,
+                datasets: [{
+                    label: 'Unique Students',
+                    data: monthlyUniqueStudents,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }, {
+                    label: 'Total Attempts',
+                    data: monthlyTotalAttempts,
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Quiz Performance Chart
+        const quizCtx = document.getElementById('quizPerformanceChart').getContext('2d');
+        const quizLabels = {{ quiz_labels | tojson | safe }};
+        const quizAttempts = {{ quiz_attempts | tojson | safe }};
+        const quizAvgScores = {{ quiz_avg_scores | tojson | safe }};
+        new Chart(quizCtx, {
+            type: 'bar',
+            data: {
+                labels: quizLabels,
+                datasets: [{
+                    label: 'Attempts',
+                    data: quizAttempts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                }, {
+                    label: 'Average Score',
+                    data: quizAvgScores,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

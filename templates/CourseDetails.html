@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Course Details - SmartQuiz</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .stats-card {
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .progress {
+            height: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>${course.title}</h2>
+            <a href="CourseManagementServlet" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+
+        <p class="lead mb-4">${course.description}</p>
+
+        <!-- Quizzes Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Course Quizzes</h4>
+            </div>
+            <div class="card-body">
+                <c:if test="${empty quizzes}">
+                    <p class="text-muted">No quizzes available for this course.</p>
+                </c:if>
+                <c:forEach items="${quizzes}" var="quiz">
+                    <div class="stats-card bg-light">
+                        <h5>${quiz.title}</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1">Attempts: ${quiz.attemptCount}</p>
+                                <p class="mb-0">Average Score: ${String.format("%.1f%%", quiz.avgScore)}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="progress">
+                                    <div class="progress-bar quiz-progress" role="progressbar" 
+                                         data-progress="${quiz.avgScore}"
+                                         aria-valuenow="${quiz.avgScore}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+        <!-- Enrolled Students Section -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Enrolled Students</h4>
+            </div>
+            <div class="card-body">
+                <c:if test="${empty students}">
+                    <p class="text-muted">No students enrolled in this course.</p>
+                </c:if>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Enrolled Date</th>
+                                <th>Quizzes Taken</th>
+                                <th>Average Score</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${students}" var="student">
+                                <tr>
+                                    <td>${student.name}</td>
+                                    <td>${student.enrolledDate}</td>
+                                    <td>${student.quizzesTaken}</td>
+                                    <td>${String.format("%.1f%%", student.avgScore)}</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success student-progress" role="progressbar" 
+                                                 data-progress="${student.avgScore}"
+                                                 aria-valuenow="${student.avgScore}" 
+                                                 aria-valuemin="0" 
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Set progress bar widths and styles
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.quiz-progress, .student-progress').forEach(function(bar) {
+                bar.style.transition = 'width 0.6s ease';
+                bar.style.width = '0%';
+                setTimeout(function() {
+                    bar.style.width = bar.dataset.progress + '%';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

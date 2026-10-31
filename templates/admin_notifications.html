@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Notifications</h2>
+<form method="post">
+  <label>Title</label><br>
+  <input name="title" required><br>
+  <label>Message</label><br>
+  <textarea name="message" required></textarea><br>
+  <button type="submit">Create Notification</button>
+</form>
+<hr>
+<ul>
+  {% for n in notes %}
+  <li style="margin-bottom:8px;">
+    <strong>{{ n['title'] }}</strong> — {{ n['message'] }} <em>({{ n['created_at'] }})</em>
+    <form action="{{ url_for('admin_delete_notification', notification_id=n['id']) }}" method="post" style="display:inline-block; margin-left:12px;">
+      <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this notification?');">Delete</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Pending Approvals</h2>
+{% if pending %}
+<table>
+  <tr><th>Username</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+  {% for user in pending %}
+  <tr>
+    <td>{{ user['username'] }}</td>
+    <td>{{ user['email'] }}</td>
+    <td>{{ user['role'] }}</td>
+    <td>
+      <form action="{{ url_for('admin_approve_user', user_id=user['id']) }}" method="post" style="display:inline-block">
+        <input type="hidden" name="role" value="student">
+        <button type="submit">Approve as Student</button>
+      </form>
+      <form action="{{ url_for('admin_reject_user', user_id=user['id']) }}" method="post" style="display:inline-block">
+        <button type="submit">Reject</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No pending users.</p>
+{% endif %}
+{% endblock %}

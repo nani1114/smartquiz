@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Take Quiz - SmartQuiz{% endblock %}
+
+{% block extra_style %}
+<style>
+    .quiz-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+    
+    .quiz-header h2 {
+        margin: 0 0 0.5rem 0;
+    }
+    
+    .quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .question-block {
+        background: white;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .question-number {
+        color: #667eea;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .option {
+        margin-bottom: 1rem;
+    }
+    
+    .option input[type="radio"] {
+        margin-right: 0.5rem;
+    }
+    
+    .option label {
+        cursor: pointer;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        display: block;
+        transition: background-color 0.3s;
+    }
+    
+    .option input[type="radio"]:checked + label {
+        background-color: #667eea;
+        color: white;
+        border-color: #667eea;
+    }
+    
+    .option label:hover {
+        background-color: #f9f9f9;
+    }
+    
+    .quiz-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    
+    .quiz-actions button {
+        flex: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-header">
+    <h2>{{ quiz['title'] }}</h2>
+    <p>{{ quiz['description'] }}</p>
+    <p><strong>Duration:</strong> {{ quiz['duration'] }} minutes</p>
+</div>
+
+<div class="quiz-container">
+    <form method="POST" action="{{ url_for('submit_quiz', quiz_id=quiz['id']) }}">
+        {% for question in questions %}
+        <div class="question-block">
+            <div class="question-number">Question {{ loop.index }} of {{ questions|length }}</div>
+            <div class="question-text">{{ question['question'] }}</div>
+            
+            <div class="option">
+                <input type="radio" id="q{{ question['id'] }}_a" name="question_{{ question['id'] }}" value="A" required>
+                <label for="q{{ question['id'] }}_a">A) {{ question['option_a'] }}</label>
+            </div>
+            
+            <div class="option">
+                <input type="radio" id="q{{ question['id'] }}_b" name="question_{{ question['id'] }}" value="B">
+                <label for="q{{ question['id'] }}_b">B) {{ question['option_b'] }}</label>
+            </div>
+            
+            <div class="option">
+                <input type="radio" id="q{{ question['id'] }}_c" name="question_{{ question['id'] }}" value="C">
+                <label for="q{{ question['id'] }}_c">C) {{ question['option_c'] }}</label>
+            </div>
+            
+            <div class="option">
+                <input type="radio" id="q{{ question['id'] }}_d" name="question_{{ question['id'] }}" value="D">
+                <label for="q{{ question['id'] }}_d">D) {{ question['option_d'] }}</label>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <div class="quiz-actions">
+            <button type="submit" class="btn btn-success">Submit Quiz</button>
+            <a href="{{ url_for('student_dashboard') }}" class="btn btn-danger">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

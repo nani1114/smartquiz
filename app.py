@@ -1,13 +1,16 @@
+from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime, timedelta
 import os
-from functools import wraps
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
-app.secret_key = 'smartquiz-secret-key-2025'
+app.secret_key = os.environ["FLASK_SECRET_KEY"]
 app.config['SESSION_TIMEOUT'] = 1800  # 30 minutes session timeout
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 
@@ -55,10 +58,13 @@ def session_required(role=None):
 
 # MySQL Configuration
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'admin@123',
-    'database': 'smartquiz'
+    "host": os.environ["DB_HOST"],
+    "port": int(os.getenv("DB_PORT", "4000")),
+    "user": os.environ["DB_USER"],
+    "password": os.environ["DB_PASSWORD"],
+    "database": os.environ["DB_NAME"],
+    "ssl_verify_cert": True,
+    "ssl_verify_identity": True
 }
 
 # Initialize database and create tables
@@ -70,7 +76,7 @@ def init_db():
             'user': DB_CONFIG['user'],
             'password': DB_CONFIG['password']
         }
-        conn = mysql.connector.connect(**temp_config)
+        conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
         
         # Create database if it doesn't exist
@@ -171,8 +177,9 @@ def get_db():
         return None
 
 # Keep the database initialization in before_request (called on every request)
-
-# ==================== AUTHENTICATION ROUTES ====================
+# Keep the database initialization in before_request (called on every request)
+# Database initialization is handled separately.
+# # ==================== AUTHENTICATION ROUTES ====================
 
 @app.route('/')
 def index():
@@ -201,19 +208,6 @@ def student_login_html():
 @app.route('/signup.html')
 def signup_html():
     return render_template('signup.html')
-
-# Serve CSS, JS, and Images from htmls folder
-@app.route('/css/<path:filename>')
-def serve_css(filename):
-    return send_from_directory(os.path.join(os.path.dirname(__file__), '../../htmls/css'), filename)
-
-@app.route('/js/<path:filename>')
-def serve_js(filename):
-    return send_from_directory(os.path.join(os.path.dirname(__file__), '../../htmls/js'), filename)
-
-@app.route('/images/<path:filename>')
-def serve_images(filename):
-    return send_from_directory(os.path.join(os.path.dirname(__file__), '../../htmls/images'), filename)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

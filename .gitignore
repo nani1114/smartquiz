@@ -33,3 +33,7 @@ dist/
 # Test cache
 .pytest_cache/
 .coverage
+
+Lib/
+test_db.py
+future update git.txt

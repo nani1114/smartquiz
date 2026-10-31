@@ -6,6 +6,7 @@ from mysql.connector import Error
 from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
+import certifi
 
 load_dotenv()
 
@@ -63,8 +64,10 @@ DB_CONFIG = {
     "user": os.environ["DB_USER"],
     "password": os.environ["DB_PASSWORD"],
     "database": os.environ["DB_NAME"],
+    "ssl_ca": certifi.where(),
     "ssl_verify_cert": True,
-    "ssl_verify_identity": True
+    "ssl_verify_identity": True,
+    "use_pure": True
 }
 
 # Initialize database and create tables

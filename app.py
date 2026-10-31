@@ -171,9 +171,6 @@ def get_db():
         return None
 
 # Keep the database initialization in before_request (called on every request)
-@app.before_request
-def init_db_on_request():
-    init_db()
 
 # ==================== AUTHENTICATION ROUTES ====================
 
